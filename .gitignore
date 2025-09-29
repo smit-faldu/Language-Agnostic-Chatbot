@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+logs/
+*.log
+
+# Caches
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# Data & indexes (generated)
+db/
+!db/README.md
+# Streamlit
+.streamlit/
+
+# FAISS index backups/temp
+faiss.index.*
+*.faiss
+
+# Temp files
+*.tmp
+*.temp
+tmp/

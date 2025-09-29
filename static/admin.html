@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/admin.css">
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold mb-6">Chatbot Admin Dashboard</h1>
+        <a href="/"><h1 class="text-3xl font-bold mb-6">Chat bot</h1></a>
+        </div>
+        <div id="stats" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold">Total Queries</h2>
+                <p id="total" class="text-2xl">Loading...</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold">Successful</h2>
+                <p id="successful" class="text-2xl text-green-600">Loading...</p>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold">Failed</h2>
+                <p id="failed" class="text-2xl text-red-600">Loading...</p>
+            </div>
+        </div>
+        <div class="bg-white p-4 rounded shadow mb-8">
+            <canvas id="dailyChart" width="400" height="200"></canvas>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold mb-4">Recent Queries</h2>
+                <ul id="recent" class="space-y-2">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-semibold mb-4">Failed Questions</h2>
+                <ul id="failed-list" class="space-y-2">
+                    <li>Loading...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/admin.js"></script>
+</body>
+</html>
