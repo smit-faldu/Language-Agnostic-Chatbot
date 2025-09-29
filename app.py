@@ -49,9 +49,14 @@ else:
 chat_engines = {}
 
 # Chat history storage
+LOGS_DIR = 'logs'
+CHAT_HISTORY_FILE = os.path.join(LOGS_DIR, 'chat_history.json')
+
+
+
 chat_history: List[Dict] = []
 try:
-    with open('chat_history.json', 'r') as f:
+    with open(CHAT_HISTORY_FILE, 'r') as f:
         chat_history = json.load(f)
 except FileNotFoundError:
     pass
@@ -68,7 +73,11 @@ def chat_page():
 def get_pdf(filename: str):
     path = os.path.join("data", filename)
     if os.path.exists(path):
-        return FileResponse(path, media_type='application/pdf')
+        headers = {
+            "Content-Disposition": f"inline; filename=\"{filename}\"",
+            "Content-Security-Policy": "frame-ancestors 'self'",
+        }
+        return FileResponse(path, media_type='application/pdf', headers=headers)
     else:
         raise HTTPException(status_code=404, detail="File not found")
 
@@ -116,7 +125,7 @@ def chat(request: ChatRequest):
                 original_language = translation_data.get('language', 'en')
                 translated_query = translation_data.get('translated_text', query)
             except (json.JSONDecodeError, AttributeError) as e:
-                print(f"Could not parse translation response: {response.text}, error: {e}")
+                # print(f"Could not parse translation response: {response.text}, error: {e}")
                 original_language = 'en'
                 translated_query = query
 
@@ -126,11 +135,11 @@ def chat(request: ChatRequest):
                     llm=llm
                 )
             chat_engine = chat_engines[session_id]
-            print(f"Using chat engine with LLM for query: {translated_query}")
+            # print(f"Using chat engine with LLM for query: {translated_query}")
             response = chat_engine.chat(translated_query)
         else:
             # Use query engine for basic retrieval without session memory
-            print(f"Using basic query engine for query: {query}")
+            # print(f"Using basic query engine for query: {query}")
             query_engine = index.as_query_engine()
             response = query_engine.query(query)
 
@@ -169,7 +178,7 @@ def chat(request: ChatRequest):
             'failed': False
         }
         chat_history.append(chat_entry)
-        with open('chat_history.json', 'w') as f:
+        with open(CHAT_HISTORY_FILE, 'w') as f:
             json.dump(chat_history, f)
 
         return {
@@ -178,7 +187,7 @@ def chat(request: ChatRequest):
             "summary": summary
         }
     except Exception as e:
-        print(f"Error during chat: {str(e)}")
+        # print(f"Error during chat: {str(e)}")
         answer = "Sorry, I could not find an answer. Please contact the office."
         # Log failed query
         chat_entry = {
@@ -191,7 +200,7 @@ def chat(request: ChatRequest):
             'failed': True
         }
         chat_history.append(chat_entry)
-        with open('chat_history.json', 'w') as f:
+        with open(CHAT_HISTORY_FILE, 'w') as f:
             json.dump(chat_history, f)
         return {
             "answer": answer,

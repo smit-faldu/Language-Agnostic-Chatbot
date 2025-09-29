@@ -15,36 +15,17 @@ function addMessage(text, isUser = false) {
 
 function createPdfPreview(fileName, pageNumber = 1) {
     const previewDiv = document.createElement('div');
-    previewDiv.className = 'pdf-preview w-full max-w-2xl my-4';
-    
-    // Create header with file name and actions
-    const header = document.createElement('div');
-    header.className = 'pdf-preview-header';
-    
-    const title = document.createElement('div');
-    title.className = 'pdf-preview-title';
-    title.textContent = fileName;
-    header.appendChild(title);
-    
-    const actions = document.createElement('div');
-    actions.className = 'pdf-preview-actions';
+    previewDiv.className = 'my-2'; // Simple margin
     
     const pdfUrl = `/data/${fileName}`;
 
     const openButton = document.createElement('button');
-    openButton.className = 'pdf-preview-button';
-    openButton.textContent = 'Open PDF';
+    // Using Tailwind classes for styling
+    openButton.className = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
+    openButton.textContent = `Open ${fileName}`;
     openButton.onclick = () => window.open(pdfUrl, '_blank');
-    actions.appendChild(openButton);
     
-    header.appendChild(actions);
-    previewDiv.appendChild(header);
-    
-    // Create iframe for PDF preview
-    const iframe = document.createElement('iframe');
-    iframe.className = 'pdf-preview-frame';
-    iframe.src = `${pdfUrl}#page=${pageNumber}`;
-    previewDiv.appendChild(iframe);
+    previewDiv.appendChild(openButton);
     
     return previewDiv;
 }

@@ -4,10 +4,10 @@ import easyocr
 import numpy as np
 from llama_index.core import VectorStoreIndex, Document, StorageContext
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-import logging
+# import logging
 import google.generativeai as genai 
 # Set up logging
-logging.basicConfig(filename='./logs/processing.log', level=logging.INFO, format='%(asctime)s - %(message)s')
+# logging.basicConfig(filename='./logs/processing.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Initialize EasyOCR reader for English and Hindi
 reader = easyocr.Reader(['en', 'hi'])
@@ -72,10 +72,10 @@ def summarize_and_keywords(full_text, pdf_name):
         keywords_str = keywords_response.text.strip()
         keywords = [kw.strip() for kw in keywords_str.split(',') if kw.strip()]
 
-        logging.info(f"Generated summary for {pdf_name}: {summary[:100]}...")
+        # logging.info(f"Generated summary for {pdf_name}: {summary[:100]}...")
         return summary, keywords
     except Exception as e:
-        logging.error(f"Error generating summary/keywords for {pdf_name}: {e}")
+        # logging.error(f"Error generating summary/keywords for {pdf_name}: {e}")
         return "", []
 
 def process_pdf(pdf_path):
@@ -140,7 +140,7 @@ def process_pdf(pdf_path):
         enhanced_documents.append(new_doc)
     documents = enhanced_documents
 
-    logging.info(f"Processed {pdf_path}: {total_pages} pages, {ocr_pages} OCR, {table_conversions} tables")
+    # logging.info(f"Processed {pdf_path}: {total_pages} pages, {ocr_pages} OCR, {table_conversions} tables")
     return documents, total_pages, ocr_pages, table_conversions
 
 def main():
@@ -167,7 +167,7 @@ def main():
     # Persist index
     index.storage_context.persist(persist_dir="./storage/college_index")
     
-    print(f"Indexing complete. Summary: {summary}")
+    # print(f"Indexing complete. Summary: {summary}")
 
 if __name__ == "__main__":
     main()

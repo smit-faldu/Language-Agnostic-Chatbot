@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+llama-index
+llama-index-embeddings-huggingface
+llama-index-llms-google-genai
+google-generativeai
+python-dotenv
+pdfplumber
+easyocr
+numpy
+torch
+torchvision
+lxml
